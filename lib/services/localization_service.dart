@@ -44,6 +44,12 @@ class LocalizationService with ChangeNotifier {
     'all': {AppLanguage.arabic: 'الكل', AppLanguage.english: 'All'},
     'no_transactions': {AppLanguage.arabic: 'لا توجد معاملات', AppLanguage.english: 'No transactions'},
     'stats': {AppLanguage.arabic: 'الإحصائيات', AppLanguage.english: 'Statistics'},
+    'budget': {AppLanguage.arabic: 'الميزانية الشهرية', AppLanguage.english: 'Monthly Budget'},
+    'set_budget': {AppLanguage.arabic: 'تحديد الميزانية', AppLanguage.english: 'Set Budget'},
+    'remaining': {AppLanguage.arabic: 'المتبقي', AppLanguage.english: 'Remaining'},
+    'spent': {AppLanguage.arabic: 'المستهلك', AppLanguage.english: 'Spent'},
+    'enter_budget_amount': {AppLanguage.arabic: 'أدخل قيمة الميزانية', AppLanguage.english: 'Enter budget amount'},
+    'over_budget': {AppLanguage.arabic: 'تجاوزت الميزانية!', AppLanguage.english: 'Over budget!'},
   };
 
   String translate(String key) {
