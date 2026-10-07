@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
@@ -38,6 +39,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
 
     final all = await DatabaseService.instance.getAllTransactions();
 
+    if (!mounted) return;
     setState(() {
       _monthlyTotal = total;
       _categoryTotals = catTotals;
@@ -59,6 +61,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         ],
       ),
       body: RefreshIndicator(
+        color: AppColors.primaryGreen,
         onRefresh: _loadData,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -112,7 +115,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         children: [
           Text(
             loc.translate('total_monthly'),
-            style: const TextStyle(color: Colors.white70, fontSize: 16),
+            style: GoogleFonts.rubik(color: Colors.white70, fontSize: 16),
           ),
           const SizedBox(height: 8),
           Row(
@@ -121,16 +124,16 @@ class _HomeDashboardState extends State<HomeDashboard> {
             children: [
               Text(
                 _monthlyTotal.toStringAsFixed(2),
-                style: const TextStyle(
+                style: GoogleFonts.rubik(
                   color: Colors.white,
-                  fontSize: 32,
+                  fontSize: 34,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 loc.translate('currency'),
-                style: const TextStyle(color: Colors.white, fontSize: 18),
+                style: GoogleFonts.rubik(color: Colors.white, fontSize: 18),
               ),
             ],
           ),
@@ -149,7 +152,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Text(
             loc.translate('categories'),
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(
@@ -163,32 +166,30 @@ class _HomeDashboardState extends State<HomeDashboard> {
               final total = _categoryTotals[cat] ?? 0;
               if (total == 0) return const SizedBox.shrink();
 
-              return Card(
-                elevation: 0,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
+              return Container(
+                width: 110,
+                margin: const EdgeInsets.symmetric(horizontal: 6),
+                decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: Colors.grey[200]!),
+                  border: Border.all(color: Colors.grey[200]!),
                 ),
-                child: Container(
-                  width: 110,
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(_getCategoryIcon(cat), color: const Color(0xFF2E7D32)),
-                      const SizedBox(height: 8),
-                      Text(
-                        loc.translate(cat.name),
-                        style: const TextStyle(fontSize: 12),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        total.toStringAsFixed(0),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(_getCategoryIcon(cat), color: const Color(0xFF2E7D32)),
+                    const SizedBox(height: 8),
+                    Text(
+                      loc.translate(cat.name),
+                      style: GoogleFonts.rubik(fontSize: 12),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      total.toStringAsFixed(0),
+                      style: GoogleFonts.rubik(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               );
             },
@@ -209,7 +210,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             children: [
               Text(
                 loc.translate('history'),
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {
@@ -218,7 +219,13 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     MaterialPageRoute(builder: (_) => TransactionsListScreen(localization: loc)),
                   ).then((_) => _loadData());
                 },
-                child: Text(loc.isArabic ? 'عرض الكل' : 'View All', style: const TextStyle(color: Color(0xFF2E7D32))),
+                child: Text(
+                  loc.isArabic ? 'عرض الكل' : 'View All',
+                  style: GoogleFonts.rubik(
+                    color: const Color(0xFF2E7D32),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ],
           ),
@@ -227,7 +234,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(40.0),
-              child: Text(loc.translate('no_transactions'), style: TextStyle(color: Colors.grey[400])),
+              child: Text(
+                loc.translate('no_transactions'),
+                style: GoogleFonts.rubik(color: Colors.grey[400]),
+              ),
             ),
           )
         else
@@ -244,11 +254,14 @@ class _HomeDashboardState extends State<HomeDashboard> {
           backgroundColor: const Color(0xFFE8F5E9),
           child: Icon(_getCategoryIcon(t.category), color: const Color(0xFF2E7D32), size: 20),
         ),
-        title: Text(t.title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text(DateFormat('yyyy/MM/dd').format(t.date)),
+        title: Text(t.title, style: GoogleFonts.rubik(fontWeight: FontWeight.w600)),
+        subtitle: Text(
+          DateFormat('yyyy/MM/dd').format(t.date),
+          style: GoogleFonts.rubik(color: Colors.grey[600], fontSize: 12),
+        ),
         trailing: Text(
           '${t.amount.toStringAsFixed(2)} ${loc.translate('currency')}',
-          style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2E7D32)),
+          style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: const Color(0xFF2E7D32)),
         ),
       ),
     );
@@ -264,4 +277,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
       case TransactionCategory.other: return Icons.more_horiz;
     }
   }
+}
+
+class AppColors {
+  static const Color primaryGreen = Color(0xFF2E7D32);
 }

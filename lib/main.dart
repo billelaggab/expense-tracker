@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.lightTheme,
       locale: _localization.currentLocale,
       supportedLocales: const [
-        Locale('ar', 'SA'),
+        Locale('ar', 'DZ'),
         Locale('en', 'US'),
       ],
       localizationsDelegates: const [

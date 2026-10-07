@@ -7,7 +7,7 @@ class LocalizationService with ChangeNotifier {
 
   AppLanguage get currentLanguage => _currentLanguage;
   Locale get currentLocale => _currentLanguage == AppLanguage.arabic
-    ? const Locale('ar', 'SA')
+    ? const Locale('ar', 'DZ')
     : const Locale('en', 'US');
 
   bool get isArabic => _currentLanguage == AppLanguage.arabic;
@@ -22,7 +22,7 @@ class LocalizationService with ChangeNotifier {
   static final Map<String, Map<AppLanguage, String>> _strings = {
     'app_title': {AppLanguage.arabic: 'متعقب المصاريف', AppLanguage.english: 'Expense Tracker'},
     'total_monthly': {AppLanguage.arabic: 'إجمالي الشهر', AppLanguage.english: 'Monthly Total'},
-    'currency': {AppLanguage.arabic: 'ر.س', AppLanguage.english: 'SAR'},
+    'currency': {AppLanguage.arabic: 'دج', AppLanguage.english: 'DZD'},
     'add_expense': {AppLanguage.arabic: 'إضافة عملية', AppLanguage.english: 'Add Transaction'},
     'history': {AppLanguage.arabic: 'السجل', AppLanguage.english: 'History'},
     'dashboard': {AppLanguage.arabic: 'الرئيسية', AppLanguage.english: 'Dashboard'},

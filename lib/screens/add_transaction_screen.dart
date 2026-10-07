@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
@@ -47,50 +48,77 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           children: [
             TextFormField(
               controller: _titleController,
-              decoration: InputDecoration(labelText: loc.translate('title')),
-              validator: (v) => v!.isEmpty ? 'Required' : null,
+              style: GoogleFonts.rubik(),
+              decoration: InputDecoration(
+                labelText: loc.translate('title'),
+                prefixIcon: const Icon(Icons.edit_note),
+              ),
+              validator: (v) => v!.isEmpty ? (loc.isArabic ? 'مطلوب' : 'Required') : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _amountController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: loc.translate('amount')),
-              validator: (v) => double.tryParse(v ?? '') == null ? 'Invalid' : null,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              style: GoogleFonts.rubik(),
+              decoration: InputDecoration(
+                labelText: loc.translate('amount'),
+                suffixText: loc.translate('currency'),
+                prefixIcon: const Icon(Icons.attach_money),
+              ),
+              validator: (v) => double.tryParse(v ?? '') == null ? (loc.isArabic ? 'مبلغ غير صحيح' : 'Invalid amount') : null,
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<TransactionCategory>(
               value: _selectedCategory,
-              decoration: InputDecoration(labelText: loc.translate('category')),
+              decoration: InputDecoration(
+                labelText: loc.translate('category'),
+                prefixIcon: const Icon(Icons.category),
+              ),
               items: TransactionCategory.values.map((cat) => DropdownMenuItem(
                 value: cat,
-                child: Text(loc.translate(cat.name)),
+                child: Text(loc.translate(cat.name), style: GoogleFonts.rubik()),
               )).toList(),
               onChanged: (v) => setState(() => _selectedCategory = v!),
             ),
             const SizedBox(height: 16),
-            ListTile(
-              title: Text("${loc.translate('date')}: ${DateFormat('yyyy/MM/dd').format(_selectedDate)}"),
-              trailing: const Icon(Icons.calendar_today),
-              onTap: () async {
-                final date = await showDatePicker(
-                  context: context,
-                  initialDate: _selectedDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                );
-                if (date != null) setState(() => _selectedDate = date);
-              },
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: Colors.grey[200]!),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.calendar_today, color: Color(0xFF2E7D32)),
+                title: Text(
+                  "${loc.translate('date')}: ${DateFormat('yyyy/MM/dd').format(_selectedDate)}",
+                  style: GoogleFonts.rubik(),
+                ),
+                trailing: const Icon(Icons.arrow_drop_down),
+                onTap: () async {
+                  final date = await showDatePicker(
+                    context: context,
+                    initialDate: _selectedDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (date != null) setState(() => _selectedDate = date);
+                },
+              ),
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _notesController,
-              decoration: InputDecoration(labelText: loc.translate('notes')),
+              style: GoogleFonts.rubik(),
+              decoration: InputDecoration(
+                labelText: loc.translate('notes'),
+                prefixIcon: const Icon(Icons.notes),
+              ),
               maxLines: 3,
             ),
             const SizedBox(height: 32),
             ElevatedButton(
               onPressed: _save,
-              child: Text(loc.translate('save')),
+              child: Text(loc.translate('save'), style: GoogleFonts.rubik(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
