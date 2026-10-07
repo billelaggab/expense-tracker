@@ -28,7 +28,7 @@ A private, local-first Android expense tracker built with Flutter.
 ## 🚀 Getting Started | البدء
 1. **Clone the repo:**
    ```bash
-   git clone https://github.com/yourusername/expense-tracker.git
+   git clone https://github.com/billelaggab/expense_tracker.git
    ```
 2. **Install Dependencies:**
    ```bash
