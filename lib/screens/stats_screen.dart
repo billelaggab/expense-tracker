@@ -96,7 +96,7 @@ class _StatsScreenState extends State<StatsScreen> {
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Colors.grey[200]!),
+                                side: BorderSide(color: Colors.grey[200]!),
                               ),
                               child: ListTile(
                                 leading: CircleAvatar(
