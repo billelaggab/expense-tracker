@@ -19,18 +19,11 @@
 ## 📸 لقطات الشاشة (Screenshots)
 
 <p align="center">
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" width="18%" alt="الشاشة الرئيسية" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" width="18%" alt="إضافة عملية" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" width="18%" alt="سجل العمليات" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" width="18%" alt="الإحصائيات" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" width="18%" alt="الإعدادات" />
-</p>
-<p align="center">
-  (الشاشة الرئيسية) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  (إضافة عملية) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  (سجل العمليات) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  (الإحصائيات) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  (الإعدادات)
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" width="19.8%" alt="الشاشة الرئيسية" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" width="19.8%" alt="إضافة عملية" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" width="19.8%" alt="سجل العمليات" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" width="19.8%" alt="الإحصائيات" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" width="19.8%" alt="الإعدادات" />
 </p>
 
 ---
