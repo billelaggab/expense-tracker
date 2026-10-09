@@ -77,6 +77,9 @@ lib/
 
 نرحب بمساهماتكم واقتراحاتكم لتطوير التطبيق! إذا واجهتك أي مشكلة أو رغبت في إضافة ميزة جديدة، لا تتردد في فتح `Issue` أو تقديم `Pull Request`.
 
+<a href="https://github.com/billelaggab/expense-tracker/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=billelaggab/expense-tracker" />
+</a>
 ---
 
 ## 📄 الترخيص
