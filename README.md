@@ -18,25 +18,25 @@
 
 ## 📸 لقطات الشاشة (Screenshots)
 
-<table align="center" style="border: none; border-collapse: collapse;">
-  <tr style="border: none;">
-    <td align="center" width="19%" style="border: none;">
+<table align="center" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" width="19%">
       <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" alt="Screenshot 1" /><br />
       (الشاشة الرئيسية)
     </td>
-    <td align="center" width="19%" style="border: none;">
+    <td align="center" width="19%">
       <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" alt="Screenshot 2" /><br />
       (إضافة عملية)
     </td>
-    <td align="center" width="19%" style="border: none;">
+    <td align="center" width="19%">
       <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" alt="Screenshot 3" /><br />
       (سجل العمليات)
     </td>
-    <td align="center" width="19%" style="border: none;">
+    <td align="center" width="19%">
       <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" alt="Screenshot 4" /><br />
       (الإحصائيات)
     </td>
-    <td align="center" width="19%" style="border: none;">
+    <td align="center" width="19%">
       <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" alt="Screenshot 5" /><br />
       (الإعدادات)
     </td>
