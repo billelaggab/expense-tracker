@@ -19,11 +19,11 @@
 ## 📸 لقطات الشاشة (Screenshots)
 
 <p align="center">
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" width="19.8%" alt="الشاشة الرئيسية" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" width="19.8%" alt="إضافة عملية" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" width="19.8%" alt="سجل العمليات" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" width="19.8%" alt="الإحصائيات" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" width="19.8%" alt="الإعدادات" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" width="19.5%" alt="الشاشة الرئيسية" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" width="19.5%" alt="إضافة عملية" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" width="19.5%" alt="سجل العمليات" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" width="19.5%" alt="الإحصائيات" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" width="19.5%" alt="الإعدادات" />
 </p>
 
 ---
