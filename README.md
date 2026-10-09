@@ -18,30 +18,20 @@
 
 ## 📸 لقطات الشاشة (Screenshots)
 
-<table align="center" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td align="center" width="19%">
-      <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" alt="Screenshot 1" /><br />
-      (الشاشة الرئيسية)
-    </td>
-    <td align="center" width="19%">
-      <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" alt="Screenshot 2" /><br />
-      (إضافة عملية)
-    </td>
-    <td align="center" width="19%">
-      <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" alt="Screenshot 3" /><br />
-      (سجل العمليات)
-    </td>
-    <td align="center" width="19%">
-      <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" alt="Screenshot 4" /><br />
-      (الإحصائيات)
-    </td>
-    <td align="center" width="19%">
-      <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" alt="Screenshot 5" /><br />
-      (الإعدادات)
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" width="18%" alt="الشاشة الرئيسية" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" width="18%" alt="إضافة عملية" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" width="18%" alt="سجل العمليات" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" width="18%" alt="الإحصائيات" />
+  <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" width="18%" alt="الإعدادات" />
+</p>
+<p align="center">
+  (الشاشة الرئيسية) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  (إضافة عملية) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  (سجل العمليات) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  (الإحصائيات) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  (الإعدادات)
+</p>
 
 ---
 
@@ -108,4 +98,4 @@ lib/
 
 ---
 
-> 🤖 **صُنع بكل حماس لتسهيل إدارة الأموال بخصوصية تامة.**
+I 🤖 **صُنع بكل حماس لتسهيل إدارة الأموال بخصوصية تامة.**
