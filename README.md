@@ -63,7 +63,7 @@ lib/
 2. **نسخ المستودع (Clone):**
    ```bash
    git clone https://github.com/billelaggab/expense-tracker.git
-   cd expense_tracker
+   cd expense-tracker
    ```
 
 3. **جلب التبعيات (Dependencies):**
