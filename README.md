@@ -1,51 +1,88 @@
-# Expense Tracker | متعقب المصاريف
+# 💰 متعقب المصاريف (Expense Tracker)
 
-A private, local-first Android expense tracker built with Flutter.
-
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Android-brightgreen)
-
-## 📖 Overview | نظرة عامة
-**Expense Tracker** is a clean, minimalist mobile application designed to help you gain complete control over your personal finances. Built for simplicity and privacy, it keeps all your financial data securely on your device, ensuring complete offline-first functionality.
-
-**متعقب المصاريف** هو تطبيق أندرويد بسيط وخصوصي يتيح لك التحكم الكامل في أموالك الشخصية. تم تصميمه ليعمل بالكامل دون إنترنت لضمان خصوصية بياناتك.
-
-## ✨ Features | المميزات
-*   **100% Private:** No cloud sync, no tracking, no sign-ups. All data stays on your phone.
-*   **Bilingual UI:** Seamlessly toggle between **English** and **Arabic** (RTL support).
-*   **Minimalist Design:** Clean light-mode interface with elegant green accents.
-*   **Dashboard:** Visualize your monthly spending and category breakdown.
-*   **Manual Entry:** Quickly log transactions with categories, dates, and notes.
+تطبيق متميز لإدارة المصاريف الشخصية بطريقة **محليّة بالكامل (Local-First)**، يركز على الخصوصية التامة وسرعة الأداء، مع دعم كامل للغتين **العربية** و**الإنجليزية**.
 
 ---
 
-## 🛠 Tech Stack | التقنيات المستخدمة
-*   **Framework:** [Flutter](https://flutter.dev/)
-*   **Database:** [SQLite](https://pub.dev/packages/sqflite) (Local-first storage)
-*   **Localization:** `flutter_localizations` & `intl`
-*   **Design:** Material Design 3
+## ✨ المميزات الرئيسية
 
-## 🚀 Getting Started | البدء
-1. **Clone the repo:**
+- 🔒 **خصوصية مطلقة (Local-First):** جميع بياناتك تخزن محلياً على جهازك باستخدام قاعدة بيانات `SQLite`، ولا يتم رفع أي معلومات لخوادم خارجية.
+- 🌍 **دعم ثنائي اللغة (عربي / إنجليزي):** إمكانية التبديل الفوري بين اللغتين مع دعم كامل لتخطيط الاتجاه من اليمين لليسار (`RTL`).
+- 📊 **إحصائيات ورسوم بيانية:** عرض تفصيلي للمصاريف الشهرية مقسمة حسب التصنيفات عبر رسوم بيانية تفاعلية (`fl_chart`).
+- 🎯 **إدارة الميزانية الشهرية:** تحديد ميزانية شهرية ومتابعة الاستهلاك بشكل لحظي عبر أشرطة تقدم بصرية.
+- ⏱️ **تتبع دورة الميزانية الزمنية:** شريط تقدم ذكي يوضح كم مرّ من الشهر وكم تبقى بناءً على تاريخ بداية الميزانية المخصص.
+- 📥 **النسخ الاحتياطي (تصدير واستيراد):** إمكانية تصدير بياناتك كملف `JSON` ومشاركتها، أو استعادتها بكل سهولة في أي وقت.
+- 🎨 **تصميم عصري:** واجهات مستخدم نظيفة مبنية وفق معايير `Material 3` مع استخدام خطوط محلية (`Rubik`) لإداء فائض وسرعة إقلاع قصوى.
+
+---
+
+## 🛠️ التقنيات المستخدمة
+
+- **Framework:** [Flutter](https://flutter.dev/) (Dart)
+- **Database:** `sqflite` (قاعدة بيانات محلية)
+- **Local Storage:** `shared_preferences` (لتخزين الإعدادات والميزانية)
+- **Charts:** `fl_chart` (للإحصائيات البيانية)
+- **Localization:** `intl` & Custom Localization Service
+- **Backup & Share:** `file_picker` & `share_plus`
+
+---
+
+## 📂 هيكل المشروع
+
+```text
+lib/
+│
+├── models/         # نماذج البيانات (مثل المعاملات المالية والتصنيفات)
+├── screens/        # شاشات التطبيق (الرئيسية، الإضافة، الإحصائيات، الإعدادات، السجل)
+├── services/       # خدمات النظام (قاعدة البيانات، الترجمة، النسخ الاحتياطي)
+└── theme/          # إعدادات الألوان والخطوط والثيم العام
+```
+
+---
+
+## 🚀 كيفية التشغيل والتثبيت محلياً
+
+1. **تثبيت متطلبات التشغيل:**
+   تأكد من تثبيت بيئة عمل Flutter على جهازك:
    ```bash
-   git clone https://github.com/billelaggab/expense_tracker.git
+   flutter doctor
    ```
-2. **Install Dependencies:**
+
+2. **نسخ المستودع (Clone):**
+   ```bash
+   git clone https://github.com/your-username/expense-tracker.git
+   cd expense_tracker
+   ```
+
+3. **جلب التبعيات (Dependencies):**
    ```bash
    flutter pub get
    ```
-3. **Run the App:**
+
+4. **تشغيل التطبيق:**
+   قم بتوصيل هاتفك أو تشغيل المحاكي (Emulator)، ثم تنفيذ الأمر:
    ```bash
    flutter run
    ```
 
-## 📱 Screenshots | لقطات الشاشة
-*(Coming soon...)*
+---
 
-## 🤝 Contributing | المساهمة
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 📸 لقطات الشاشة (قريباً)
+
+*(سيتم إضافة صور توضيحية لواجهات التطبيق قريباً)*
 
 ---
 
-## 📄 License | الترخيص
-This project is licensed under the MIT License.
+## 🤝 المساهمة
+
+نرحب بمساهماتكم واقتراحاتكم لتطوير التطبيق! إذا واجهتك أي مشكلة أو رغبت في إضافة ميزة جديدة، لا تتردد في فتح `Issue` أو تقديم `Pull Request`.
+
+---
+
+## 📄 الترخيص
+
+هذا المشروع مرخص تحت رخصة MIT. يمكنك استخدام، تعديل، وتوزيع الكود بحرية.
+
+---
+
+> 🤖 **صُنع بكل حماس لتسهيل إدارة الأموال بخصوصية تامة.**
