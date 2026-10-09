@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
 import '../services/localization_service.dart';
@@ -54,7 +53,7 @@ class _StatsScreenState extends State<StatsScreen> {
               ? Center(
                   child: Text(
                     loc.translate('no_transactions'),
-                    style: GoogleFonts.rubik(color: Colors.grey[400]),
+                    style: TextStyle(color: Colors.grey[400]),
                   ),
                 )
               : SingleChildScrollView(
@@ -63,15 +62,15 @@ class _StatsScreenState extends State<StatsScreen> {
                       const SizedBox(height: 20),
                       Text(
                         loc.translate('total_monthly'),
-                        style: GoogleFonts.rubik(color: Colors.grey[600], fontSize: 16),
+                        style: TextStyle(color: Colors.grey[600], fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         '${_totalSpent.toStringAsFixed(2)} ${loc.translate('currency')}',
-                        style: GoogleFonts.rubik(
+                        style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: const Color(0xFF2E7D32),
+                          color: Color(0xFF2E7D32),
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -103,11 +102,11 @@ class _StatsScreenState extends State<StatsScreen> {
                                   backgroundColor: _getCategoryColor(entry.key).withValues(alpha: 0.15),
                                   child: Icon(_getCategoryIcon(entry.key), color: _getCategoryColor(entry.key)),
                                 ),
-                                title: Text(loc.translate(entry.key.name), style: GoogleFonts.rubik(fontWeight: FontWeight.w600)),
+                                title: Text(loc.translate(entry.key.name), style: const TextStyle(fontWeight: FontWeight.w600)),
                                 subtitle: Text('${percentage.toStringAsFixed(1)}%'),
                                 trailing: Text(
                                   '${entry.value.toStringAsFixed(2)} ${loc.translate('currency')}',
-                                  style: GoogleFonts.rubik(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             );
@@ -129,7 +128,7 @@ class _StatsScreenState extends State<StatsScreen> {
         value: entry.value,
         title: '${percentage.toStringAsFixed(0)}%',
         radius: 60,
-        titleStyle: GoogleFonts.rubik(
+        titleStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
           color: Colors.white,

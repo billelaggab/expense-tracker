@@ -1,44 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color primaryGreen = Color(0xFF2E7D32);
   static const Color accentGreen = Color(0xFF4CAF50);
-  static const Color lightGreenBg = Color(0xFFE8F5E9);
   static const Color surfaceWhite = Colors.white;
   static const Color textDark = Color(0xFF212121);
-  static const Color textLight = Color(0xFF757575);
 
   static ThemeData get lightTheme {
-    final baseTheme = ThemeData(
+    return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Rubik',
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryGreen,
         primary: primaryGreen,
         secondary: accentGreen,
         surface: surfaceWhite,
-        background: Colors.grey[50]!,
       ),
       scaffoldBackgroundColor: Colors.grey[50],
-    );
-
-    return baseTheme.copyWith(
-      textTheme: GoogleFonts.rubikTextTheme(baseTheme.textTheme),
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: surfaceWhite,
         foregroundColor: textDark,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: GoogleFonts.rubik(
+        titleTextStyle: TextStyle(
           color: textDark,
           fontSize: 20,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Rubik',
         ),
       ),
       cardTheme: CardThemeData(
         color: surfaceWhite,
         elevation: 1,
-        shadowColor: Colors.black.withOpacity(0.05),
+        shadowColor: Colors.black.withValues(alpha: 0.05),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       ),
@@ -55,7 +49,7 @@ class AppTheme {
           minimumSize: const Size(double.infinity, 52),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           elevation: 0,
-          textStyle: GoogleFonts.rubik(
+          textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/transaction.dart';
@@ -8,6 +7,7 @@ import '../services/localization_service.dart';
 import 'add_transaction_screen.dart';
 import 'transactions_list_screen.dart';
 import 'stats_screen.dart';
+import 'settings_screen.dart';
 
 class HomeDashboard extends StatefulWidget {
   final LocalizationService localization;
@@ -20,6 +20,7 @@ class HomeDashboard extends StatefulWidget {
 class _HomeDashboardState extends State<HomeDashboard> {
   double _monthlyTotal = 0;
   double _monthlyBudget = 50000.0; // Default budget in DZD
+  DateTime _budgetStartDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
   List<ExpenseTransaction> _recentTransactions = [];
   Map<TransactionCategory, double> _categoryTotals = {};
 
@@ -27,13 +28,17 @@ class _HomeDashboardState extends State<HomeDashboard> {
   void initState() {
     super.initState();
     _loadData();
-    _loadBudget();
+    _loadBudgetAndSettings();
   }
 
-  Future<void> _loadBudget() async {
+  Future<void> _loadBudgetAndSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _monthlyBudget = prefs.getDouble('monthly_budget') ?? 50000.0;
+      final timestamp = prefs.getInt('budget_start_date');
+      if (timestamp != null) {
+        _budgetStartDate = DateTime.fromMillisecondsSinceEpoch(timestamp);
+      }
     });
   }
 
@@ -71,11 +76,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(loc.translate('set_budget'), style: GoogleFonts.rubik(fontWeight: FontWeight.bold)),
+        title: Text(loc.translate('set_budget'), style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
-          style: GoogleFonts.rubik(),
+          style: Theme.of(context).textTheme.bodyMedium,
           decoration: InputDecoration(
             labelText: loc.translate('budget'),
             suffixText: loc.translate('currency'),
@@ -84,7 +89,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(loc.translate('cancel'), style: GoogleFonts.rubik()),
+            child: Text(loc.translate('cancel'), style: Theme.of(context).textTheme.bodyMedium),
           ),
           ElevatedButton(
             onPressed: () {
@@ -94,7 +99,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
               }
               Navigator.pop(context);
             },
-            child: Text(loc.translate('save'), style: GoogleFonts.rubik()),
+            child: Text(loc.translate('save'), style: Theme.of(context).textTheme.bodyMedium),
           ),
         ],
       ),
@@ -115,7 +120,17 @@ class _HomeDashboardState extends State<HomeDashboard> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => StatsScreen(localization: loc)),
-              );
+              ).then((_) => _loadData());
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: loc.translate('settings'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => SettingsScreen(localization: loc)),
+              ).then((_) => _loadBudgetAndSettings());
             },
           ),
           IconButton(
@@ -126,7 +141,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
       ),
       body: RefreshIndicator(
         color: AppColors.primaryGreen,
-        onRefresh: _loadData,
+        onRefresh: () async {
+          await _loadData();
+          await _loadBudgetAndSettings();
+        },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
@@ -180,7 +198,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         children: [
           Text(
             loc.translate('total_monthly'),
-            style: GoogleFonts.rubik(color: Colors.white70, fontSize: 16),
+            style: const TextStyle(color: Colors.white70, fontSize: 16),
           ),
           const SizedBox(height: 8),
           Row(
@@ -189,7 +207,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             children: [
               Text(
                 _monthlyTotal.toStringAsFixed(2),
-                style: GoogleFonts.rubik(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
@@ -198,7 +216,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
               const SizedBox(width: 8),
               Text(
                 loc.translate('currency'),
-                style: GoogleFonts.rubik(color: Colors.white, fontSize: 18),
+                style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
             ],
           ),
@@ -210,6 +228,22 @@ class _HomeDashboardState extends State<HomeDashboard> {
   Widget _buildBudgetCard(LocalizationService loc) {
     final progress = _monthlyBudget > 0 ? (_monthlyTotal / _monthlyBudget).clamp(0.0, 1.0) : 0.0;
     final isOver = _monthlyTotal > _monthlyBudget;
+
+    // Calculate month cycle progress based on _budgetStartDate
+    final now = DateTime.now();
+    // Construct current cycle start date using the day of _budgetStartDate
+    DateTime cycleStart = DateTime(now.year, now.month, _budgetStartDate.day);
+    if (now.isBefore(cycleStart)) {
+      // If today is before the start day, the cycle started last month
+      cycleStart = DateTime(now.year, now.month - 1, _budgetStartDate.day);
+    }
+    // Cycle end is exactly one month after cycleStart
+    DateTime cycleEnd = DateTime(cycleStart.year, cycleStart.month + 1, _budgetStartDate.day);
+
+    final totalCycleDays = cycleEnd.difference(cycleStart).inDays;
+    final daysPassed = now.difference(cycleStart).inDays.clamp(0, totalCycleDays);
+    final daysRemaining = totalCycleDays - daysPassed;
+    final timeProgress = totalCycleDays > 0 ? (daysPassed / totalCycleDays).clamp(0.0, 1.0) : 0.0;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -227,19 +261,20 @@ class _HomeDashboardState extends State<HomeDashboard> {
             children: [
               Text(
                 loc.translate('budget'),
-                style: GoogleFonts.rubik(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               TextButton.icon(
                 onPressed: () => _showBudgetDialog(loc),
                 icon: const Icon(Icons.edit, size: 16, color: Color(0xFF2E7D32)),
                 label: Text(
                   '${_monthlyBudget.toStringAsFixed(0)} ${loc.translate('currency')}',
-                  style: GoogleFonts.rubik(color: const Color(0xFF2E7D32), fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Color(0xFF2E7D32), fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 8),
+          // First Progress Bar: Money Spent
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
@@ -257,15 +292,57 @@ class _HomeDashboardState extends State<HomeDashboard> {
             children: [
               Text(
                 '${loc.translate('spent')}: ${_monthlyTotal.toStringAsFixed(0)}',
-                style: GoogleFonts.rubik(color: Colors.grey[600], fontSize: 13),
+                style: TextStyle(color: Colors.grey[600], fontSize: 13),
               ),
               Text(
                 isOver ? loc.translate('over_budget') : '${loc.translate('remaining')}: ${(_monthlyBudget - _monthlyTotal).toStringAsFixed(0)}',
-                style: GoogleFonts.rubik(
+                style: TextStyle(
                   color: isOver ? Colors.red : Colors.grey[600],
                   fontWeight: isOver ? FontWeight.bold : FontWeight.normal,
                   fontSize: 13,
                 ),
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Divider(),
+          ),
+          // Second Progress Bar: Time / Month Cycle Progress
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                loc.translate('month_progress'),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '${(timeProgress * 100).toStringAsFixed(0)}%',
+                style: const TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: LinearProgressIndicator(
+              value: timeProgress,
+              minHeight: 10,
+              backgroundColor: Colors.grey[100],
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$daysPassed ${loc.translate('days_passed')}',
+                style: TextStyle(color: Colors.grey[600], fontSize: 13),
+              ),
+              Text(
+                '$daysRemaining ${loc.translate('days_remaining')}',
+                style: TextStyle(color: Colors.blue[700], fontSize: 13, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -284,7 +361,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Text(
             loc.translate('categories'),
-            style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(
@@ -314,12 +391,12 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     const SizedBox(height: 8),
                     Text(
                       loc.translate(cat.name),
-                      style: GoogleFonts.rubik(fontSize: 12),
+                      style: const TextStyle(fontSize: 12),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       total.toStringAsFixed(0),
-                      style: GoogleFonts.rubik(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -342,7 +419,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             children: [
               Text(
                 loc.translate('history'),
-                style: GoogleFonts.rubik(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {
@@ -353,8 +430,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 },
                 child: Text(
                   loc.isArabic ? 'عرض الكل' : 'View All',
-                  style: GoogleFonts.rubik(
-                    color: const Color(0xFF2E7D32),
+                  style: const TextStyle(
+                    color: Color(0xFF2E7D32),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -368,7 +445,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
               padding: const EdgeInsets.all(40.0),
               child: Text(
                 loc.translate('no_transactions'),
-                style: GoogleFonts.rubik(color: Colors.grey[400]),
+                style: TextStyle(color: Colors.grey[400]),
               ),
             ),
           )
@@ -386,14 +463,14 @@ class _HomeDashboardState extends State<HomeDashboard> {
           backgroundColor: const Color(0xFFE8F5E9),
           child: Icon(_getCategoryIcon(t.category), color: const Color(0xFF2E7D32), size: 20),
         ),
-        title: Text(t.title, style: GoogleFonts.rubik(fontWeight: FontWeight.w600)),
+        title: Text(t.title, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(
           DateFormat('yyyy/MM/dd').format(t.date),
-          style: GoogleFonts.rubik(color: Colors.grey[600], fontSize: 12),
+          style: TextStyle(color: Colors.grey[600], fontSize: 12),
         ),
         trailing: Text(
           '${t.amount.toStringAsFixed(2)} ${loc.translate('currency')}',
-          style: GoogleFonts.rubik(fontWeight: FontWeight.bold, color: const Color(0xFF2E7D32)),
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2E7D32)),
         ),
       ),
     );

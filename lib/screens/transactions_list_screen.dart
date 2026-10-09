@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
@@ -90,7 +89,7 @@ class _TransactionsListScreenState extends State<TransactionsListScreen> {
                 ? Center(
                     child: Text(
                       loc.translate('no_transactions'),
-                      style: GoogleFonts.rubik(color: Colors.grey[400]),
+                      style: TextStyle(color: Colors.grey[400]),
                     ),
                   )
                 : ListView.builder(
@@ -126,16 +125,16 @@ class _TransactionsListScreenState extends State<TransactionsListScreen> {
                                 size: 20,
                               ),
                             ),
-                            title: Text(t.title, style: GoogleFonts.rubik(fontWeight: FontWeight.w600)),
+                            title: Text(t.title, style: const TextStyle(fontWeight: FontWeight.w600)),
                             subtitle: Text(
                               DateFormat('yyyy/MM/dd').format(t.date),
-                              style: GoogleFonts.rubik(color: Colors.grey[600], fontSize: 12),
+                              style: TextStyle(color: Colors.grey[600], fontSize: 12),
                             ),
                             trailing: Text(
                               '${t.amount.toStringAsFixed(2)} ${loc.translate('currency')}',
-                              style: GoogleFonts.rubik(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: const Color(0xFF2E7D32),
+                                color: Color(0xFF2E7D32),
                               ),
                             ),
                           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
@@ -46,20 +45,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            TextFormField(
-              controller: _titleController,
-              style: GoogleFonts.rubik(),
-              decoration: InputDecoration(
-                labelText: loc.translate('title'),
-                prefixIcon: const Icon(Icons.edit_note),
-              ),
-              validator: (v) => v!.isEmpty ? (loc.isArabic ? 'مطلوب' : 'Required') : null,
-            ),
-            const SizedBox(height: 16),
+            // 1. Amount
             TextFormField(
               controller: _amountController,
+              autofocus: true,
+              textInputAction: TextInputAction.next,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              style: GoogleFonts.rubik(),
               decoration: InputDecoration(
                 labelText: loc.translate('amount'),
                 suffixText: loc.translate('currency'),
@@ -68,19 +59,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               validator: (v) => double.tryParse(v ?? '') == null ? (loc.isArabic ? 'مبلغ غير صحيح' : 'Invalid amount') : null,
             ),
             const SizedBox(height: 16),
-            DropdownButtonFormField<TransactionCategory>(
-              value: _selectedCategory,
-              decoration: InputDecoration(
-                labelText: loc.translate('category'),
-                prefixIcon: const Icon(Icons.category),
-              ),
-              items: TransactionCategory.values.map((cat) => DropdownMenuItem(
-                value: cat,
-                child: Text(loc.translate(cat.name), style: GoogleFonts.rubik()),
-              )).toList(),
-              onChanged: (v) => setState(() => _selectedCategory = v!),
-            ),
-            const SizedBox(height: 16),
+            // 2. Date
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -91,7 +70,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 leading: const Icon(Icons.calendar_today, color: Color(0xFF2E7D32)),
                 title: Text(
                   "${loc.translate('date')}: ${DateFormat('yyyy/MM/dd').format(_selectedDate)}",
-                  style: GoogleFonts.rubik(),
                 ),
                 trailing: const Icon(Icons.arrow_drop_down),
                 onTap: () async {
@@ -106,9 +84,34 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               ),
             ),
             const SizedBox(height: 16),
+            // 3. Transaction Name (Title)
+            TextFormField(
+              controller: _titleController,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                labelText: loc.translate('title'),
+                prefixIcon: const Icon(Icons.edit_note),
+              ),
+              validator: (v) => v!.isEmpty ? (loc.isArabic ? 'مطلوب' : 'Required') : null,
+            ),
+            const SizedBox(height: 16),
+            // 4. Category
+            DropdownButtonFormField<TransactionCategory>(
+              initialValue: _selectedCategory,
+              decoration: InputDecoration(
+                labelText: loc.translate('category'),
+                prefixIcon: const Icon(Icons.category),
+              ),
+              items: TransactionCategory.values.map((cat) => DropdownMenuItem(
+                value: cat,
+                child: Text(loc.translate(cat.name)),
+              )).toList(),
+              onChanged: (v) => setState(() => _selectedCategory = v!),
+            ),
+            const SizedBox(height: 16),
+            // 5. Notes
             TextFormField(
               controller: _notesController,
-              style: GoogleFonts.rubik(),
               decoration: InputDecoration(
                 labelText: loc.translate('notes'),
                 prefixIcon: const Icon(Icons.notes),
@@ -118,7 +121,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
             const SizedBox(height: 32),
             ElevatedButton(
               onPressed: _save,
-              child: Text(loc.translate('save'), style: GoogleFonts.rubik(fontSize: 16, fontWeight: FontWeight.bold)),
+              child: Text(loc.translate('save'), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           ],
         ),

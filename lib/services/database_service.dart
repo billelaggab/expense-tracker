@@ -51,12 +51,20 @@ class DatabaseService {
 
   Future<List<ExpenseTransaction>> getMonthlyTransactions(int month, int year) async {
     final db = await instance.database;
-    final List<Map<String, dynamic>> result = await db.query('transactions');
 
-    return result
-        .map((map) => ExpenseTransaction.fromMap(map))
-        .where((t) => t.date.month == month && t.date.year == year)
-        .toList();
+    // Format month to 2 digits (e.g., '01', '05')
+    final String monthStr = month.toString().padLeft(2, '0');
+    final String yearStr = year.toString();
+
+    // Query using SQLite date functions on the ISO8601 string
+    final result = await db.query(
+      'transactions',
+      where: "strftime('%m', date) = ? AND strftime('%Y', date) = ?",
+      whereArgs: [monthStr, yearStr],
+      orderBy: 'date DESC',
+    );
+
+    return result.map((map) => ExpenseTransaction.fromMap(map)).toList();
   }
 
   Future<int> updateTransaction(ExpenseTransaction transaction) async {
