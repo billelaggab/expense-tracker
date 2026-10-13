@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/backup_service.dart';
 import '../services/localization_service.dart';
-import '../services/ad_service.dart';
 import '../widgets/banner_ad.dart';
 
 class SettingsScreen extends StatefulWidget {

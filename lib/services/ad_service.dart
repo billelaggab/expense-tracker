@@ -1,5 +1,6 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class AdService {
   AdService._internal();
@@ -22,27 +23,14 @@ class AdService {
     return 'ca-app-pub-XXXXXXXXXXXXXXXX/INTERSTITIAL_ID';
   }
 
-  static String get _androidAppId {
-    if (kDebugMode) {
-      return 'ca-app-pub-3940256099942544~3347511713';
-    }
-    // TODO: Replace with actual Android app ID
-    return 'ca-app-pub-XXXXXXXXXXXXXXXX~ANDROID_ID';
-  }
-
-  static String get _iOSAppId {
-    if (kDebugMode) {
-      return 'ca-app-pub-3940256099942544~1458002511';
-    }
-    // TODO: Replace with actual iOS app ID
-    return 'ca-app-pub-XXXXXXXXXXXXXXXX~IOS_ID';
-  }
 
   BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
   bool _isInterstitialLoaded = false;
   int _transactionsSinceLastInterstitial = 0;
   static const int _interstitialFrequency = 4; // Show every 4 transactions
+
+  BannerAd? get bannerAd => _bannerAd;
 
   void initialize() {
     MobileAds.instance.initialize();
@@ -78,12 +66,16 @@ class AdService {
   Widget buildBannerAd() {
     if (_bannerAd == null) {
       loadBannerAd();
-      return const SizedBox(
+      return SizedBox(
         width: double.infinity,
         height: 50,
       );
     }
-    return AdWidget(ad: _bannerAd!);
+    return SizedBox(
+      width: AdSize.banner.width.toDouble(),
+      height: AdSize.banner.height.toDouble(),
+      child: AdWidget(ad: _bannerAd!),
+    );
   }
 
   void loadInterstitialAd() {

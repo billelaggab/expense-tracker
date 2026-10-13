@@ -4,7 +4,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'services/localization_service.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_dashboard.dart';
-import 'services/ad_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

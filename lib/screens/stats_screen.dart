@@ -3,7 +3,6 @@ import 'package:fl_chart/fl_chart.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
 import '../services/localization_service.dart';
-import '../services/ad_service.dart';
 import '../widgets/banner_ad.dart';
 
 class StatsScreen extends StatefulWidget {
