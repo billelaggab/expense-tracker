@@ -1,94 +1,211 @@
-# 💰 متعقب المصاريف (Expense Tracker)
+<div align="center">
 
-تطبيق متميز لإدارة المصاريف الشخصية بطريقة **محليّة بالكامل (Local-First)**، يركز على الخصوصية التامة وسرعة الأداء، مع دعم كامل للغتين **العربية** و**الإنجليزية**.
+# 💰 Expense Tracker
 
----
+**A private, high-performance, local-first personal finance manager built with Flutter.**
 
-## ✨ المميزات الرئيسية
-
-- 🔒 **خصوصية مطلقة (Local-First):** جميع بياناتك تخزن محلياً على جهازك باستخدام قاعدة بيانات `SQLite`, ولا يتم رفع أي معلومات لخوادم خارجية.
-- 🌍 **دعم ثنائي اللغة (عربي / إنجليزي):** إمكانية التبديل الفوري بين اللغتين مع دعم كامل لتخطيط الاتجاه من اليمين لليسار (`RTL`).
-- 📊 **إحصائيات ورسوم بيانية:** عرض تفصيلي للمصاريف الشهرية مقسمة حسب التصنيفات عبر رسوم بيانية تفاعلية (`fl_chart`).
-- 🎯 **إدارة الميزانية الشهرية:** تحديد ميزانية شهرية ومتابعة الاستهلاك بشكل لحظي عبر أشرطة تقدم بصرية.
-- ⏱️ **تتبع دورة الميزانية الزمنية:** شريط تقدم ذكي يوضح كم مرّ من الشهر وكم تبقى بناءً على تاريخ بداية الميزانية المخصص.
-- 📥 **النسخ الاحتياطي (تصدير واستيراد):** إمكانية تصدير بياناتك كملف `JSON` ومشاركتها، أو استعادتها بكل سهولة في أي وقت.
-- 🎨 **تصميم عصري:** واجهات مستخدم نظيفة مبنية وفق معايير `Material 3` مع استخدام خطوط محلية (`Rubik`) لإداء فائض وسرعة إقلاع قصوى.
-
----
-
-## 📸 لقطات الشاشة (Screenshots)
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev/)
+[![SQLite](https://img.shields.io/badge/SQLite-%2307405E.svg?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/billelaggab/expense-tracker/pulls)
 
 <p align="center">
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" width="19.5%" alt="الشاشة الرئيسية" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" width="19.5%" alt="إضافة عملية" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" width="19.5%" alt="سجل العمليات" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" width="19.5%" alt="الإحصائيات" />
-  <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" width="19.5%" alt="الإعدادات" />
+  <a href="#-key-features">Key Features</a> •
+  <a href="#-screenshots">Screenshots</a> •
+  <a href="#-tech-stack">Tech Stack</a> •
+  <a href="#-project-structure">Project Structure</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-contributing">Contributing</a>
 </p>
 
----
-
-## 🛠️ التقنيات المستخدمة
-
-- **Framework:** [Flutter](https://flutter.dev/) (Dart)
-- **Database:** `sqflite` (قاعدة بيانات محلية)
-- **Local Storage:** `shared_preferences` (لتخزين الإعدادات والميزانية)
-- **Charts:** `fl_chart` (للإحصائيات البيانية)
-- **Localization:** `intl` & Custom Localization Service
-- **Backup & Share:** `file_picker` & `share_plus`
+</div>
 
 ---
 
-## 📂 هيكل المشروع
+## 📖 Overview
+
+**Expense Tracker** is designed with a strict **Local-First** philosophy. Your financial data is sensitive, and it belongs solely to you. There are no external analytics, cloud tracking, or mandatory accounts. All transactions, budgets, and settings reside securely in an offline SQLite database on your device, providing instantaneous launch speeds, smooth animations, and complete data sovereignty.
+
+Built from the ground up to support both **Arabic** (RTL) and **English** (LTR) natively, the app delivers a tailored, culturally aligned user experience with seamless on-the-fly language switching.
+
+---
+
+## ✨ Key Features
+
+- 🔒 **100% Local-First & Zero Telemetry**  
+  Zero remote servers or third-party trackers. All records are stored locally using SQLite (`sqflite`), guaranteeing total privacy and offline availability.
+
+- 🌍 **Bilingual & RTL-Native (Arabic & English)**  
+  Instant runtime switching between Arabic and English with full Right-to-Left (RTL) and Left-to-Right (LTR) layout adaptability.
+
+- 📊 **Interactive Analytics & Categorization**  
+  Rich graphical breakdowns powered by `fl_chart`. Inspect monthly spending by category, track trends, and identify cash flow patterns at a glance.
+
+- 🎯 **Dynamic Budget Management**  
+  Define custom monthly spending caps. Visual progress indicators provide immediate feedback on remaining funds and consumption velocity.
+
+- ⏱️ **Intelligent Budget Cycle Tracking**  
+  Track your custom billing cycle with a synchronized progress timeline showing days elapsed versus remaining in your budget period.
+
+- 💾 **Portable JSON Backup & Restore**  
+  Export full backups in human-readable JSON format, share via system sheets (`share_plus`), and restore anytime without friction.
+
+- 🎨 **Modern Material 3 Aesthetic**  
+  Clean, accessible UI built around Material Design 3 guidelines, paired with bundled local `Rubik` typography for consistent rendering across platforms.
+
+---
+
+## 📱 Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="20%">
+        <b>Dashboard</b><br/><br/>
+        <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" alt="Home Dashboard" width="100%" />
+      </td>
+      <td align="center" width="20%">
+        <b>Add Expense</b><br/><br/>
+        <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" alt="Add Transaction" width="100%" />
+      </td>
+      <td align="center" width="20%">
+        <b>Transactions History</b><br/><br/>
+        <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" alt="Transaction History" width="100%" />
+      </td>
+      <td align="center" width="20%">
+        <b>Analytics & Stats</b><br/><br/>
+        <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" alt="Statistics and Charts" width="100%" />
+      </td>
+      <td align="center" width="20%">
+        <b>Settings & Backup</b><br/><br/>
+        <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" alt="Settings & Backup" width="100%" />
+      </td>
+    </tr>
+  </table>
+</div>
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Framework** | [Flutter](https://flutter.dev/) (Dart SDK `^3.0.0`) | Cross-platform UI toolkit |
+| **Local Database** | [`sqflite`](https://pub.dev/packages/sqflite) & [`path`](https://pub.dev/packages/path) | High-performance relational persistence |
+| **Preferences** | [`shared_preferences`](https://pub.dev/packages/shared_preferences) | Key-value store for app configuration and active budget parameters |
+| **Data Visualization** | [`fl_chart`](https://pub.dev/packages/fl_chart) | Interactive charts and category breakdown graphs |
+| **Internationalization** | [`intl`](https://pub.dev/packages/intl) & Custom Localization | Multilingual locale handling and number/currency formatting |
+| **File I/O & Sharing** | [`file_picker`](https://pub.dev/packages/file_picker), [`share_plus`](https://pub.dev/packages/share_plus), [`path_provider`](https://pub.dev/packages/path_provider) | JSON file creation, picker dialogues, and system share intents |
+| **Design System** | Material 3 & [Rubik Font](https://fonts.google.com/specimen/Rubik) | Responsive typography and modern component styles |
+
+---
+
+## 📂 Project Structure
 
 ```text
-lib/
-│
-├── models/         # نماذج البيانات (مثل المعاملات المالية والتصنيفات)
-├── screens/        # شاشات التطبيق (الرئيسية، الإضافة، الإحصائيات، الإعدادات، السجل)
-├── services/       # خدمات النظام (قاعدة البيانات، الترجمة، النسخ الاحتياطي)
-└── theme/          # إعدادات الألوان والخطوط والثيم العام
+expense_tracker/
+├── assets/
+│   └── fonts/                 # Bundled offline fonts (Rubik Regular, SemiBold, Bold)
+├── lib/
+│   ├── models/                # Domain models (Transaction, Category definitions)
+│   │   └── transaction.dart
+│   ├── screens/               # Presentation layer and application screens
+│   │   ├── home_dashboard.dart           # Primary dashboard & budget overview
+│   │   ├── add_transaction_screen.dart   # Transaction creation and editing
+│   │   ├── transactions_list_screen.dart # Chronological transaction log
+│   │   ├── stats_screen.dart             # Charts, analytics, and category breakdown
+│   │   └── settings_screen.dart          # Currency, language, and backup controls
+│   ├── services/              # Core business logic & persistence
+│   │   ├── database_service.dart         # SQLite queries and migrations
+│   │   ├── localization_service.dart     # AR/EN translations and locale state
+│   │   └── backup_service.dart           # JSON export, import, and validation
+│   ├── theme/                 # Design tokens, color schemes, and component themes
+│   │   └── app_theme.dart
+│   └── main.dart              # Application bootstrap & dependency setup
+├── UI/
+│   └── Screenshots/           # Visual documentation assets
+└── pubspec.yaml               # Project dependencies and asset manifests
 ```
 
 ---
 
-## 🚀 كيفية التشغيل والتثبيت محلياً
+## 🚀 Getting Started
 
-1. **تثبيت متطلبات التشغيل:**
-   تأكد من تثبيت بيئة عمل Flutter على جهازك:
-   ```bash
-   flutter doctor
-   ```
+### Prerequisites
 
-2. **نسخ المستودع (Clone):**
+Ensure you have the following installed in your local development environment:
+
+- **[Flutter SDK](https://docs.flutter.dev/get-started/install)** (`>= 3.0.0 < 4.0.0`)
+- **[Dart SDK](https://dart.dev/get-dart)** (bundled with Flutter)
+- An Android device / iOS simulator / Android Emulator
+
+Verify your installation with:
+
+```bash
+flutter doctor
+```
+
+### Installation
+
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/billelaggab/expense-tracker.git
    cd expense-tracker
    ```
 
-3. **جلب التبعيات (Dependencies):**
+2. **Fetch dependencies:**
    ```bash
    flutter pub get
    ```
 
-4. **تشغيل التطبيق:**
-   قم بتوصيل هاتفك أو تشغيل المحاكي (Emulator), ثم تنفيذ الأمر:
+3. **Run the application:**
    ```bash
+   # Run in debug mode on connected device
    flutter run
+   ```
+
+4. **Build release packages (Optional):**
+   ```bash
+   # Android APK
+   flutter build apk --release
+
+   # Android App Bundle (AAB)
+   flutter build appbundle --release
    ```
 
 ---
 
-## 🤝 المساهمة
+## 🗺️ Roadmap
 
-نرحب بمساهماتكم واقتراحاتكم لتطوير التطبيق! إذا واجهتك أي مشكلة أو رغبت في إضافة ميزة جديدة، لا تتردد في فتح `Issue` أو تقديم `Pull Request`.
-
----
-
-## 📄 الترخيص
-
-هذا المشروع مرخص تحت رخصة MIT. يمكنك استخدام، تعديل، وتوزيع الكود بحرية.
+- [ ] 🔐 **Biometric Authentication** (Fingerprint / Face ID unlock)
+- [ ] 💱 **Multi-Currency Support** with manual conversion rates
+- [ ] 🔄 **Recurring Transactions** (Subscriptions & recurring bills)
+- [ ] 🏷️ **Custom Category Tags & Color Pickers**
+- [ ] 📄 **PDF / CSV Report Generation**
 
 ---
 
-🤖 **صُنع بكل حماس لتسهيل إدارة الأموال بخصوصية تامة.**
+## 🤝 Contributing
+
+Contributions, feedback, and feature requests are welcome!
+
+1. **Fork** the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a **Pull Request**
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file or refer to the standard MIT terms for details.
+
+---
+
+<div align="center">
+
+Crafted with care by **[Billel Aggab](https://github.com/billelaggab)** • Empowering financial mindfulness with complete privacy.
+
+</div>
