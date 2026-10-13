@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/backup_service.dart';
 import '../services/localization_service.dart';
+import '../services/ad_service.dart';
+import '../widgets/banner_ad.dart';
 
 class SettingsScreen extends StatefulWidget {
   final LocalizationService localization;
@@ -100,39 +102,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(title: Text(loc.translate('settings'))),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : ListView(
-              padding: const EdgeInsets.all(16),
+          : Column(
               children: [
-                // Budget Start Date
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.calendar_month, color: Color(0xFF2E7D32)),
-                    title: Text(loc.translate('budget_start_date')),
-                    subtitle: Text(DateFormat('yyyy/MM/dd').format(_budgetStartDate)),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: _selectBudgetStartDate,
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      // Budget Start Date
+                      Card(
+                        child: ListTile(
+                          leading: const Icon(Icons.calendar_month, color: Color(0xFF2E7D32)),
+                          title: Text(loc.translate('budget_start_date')),
+                          subtitle: Text(DateFormat('yyyy/MM/dd').format(_budgetStartDate)),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: _selectBudgetStartDate,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      // Export Backup
+                      Card(
+                        child: ListTile(
+                          leading: const Icon(Icons.file_download, color: Color(0xFF2E7D32)),
+                          title: Text(loc.translate('export_backup')),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: _exportBackup,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      // Import Backup
+                      Card(
+                        child: ListTile(
+                          leading: const Icon(Icons.file_upload, color: Color(0xFF2E7D32)),
+                          title: Text(loc.translate('import_backup')),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: _importBackup,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 12),
-                // Export Backup
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.file_download, color: Color(0xFF2E7D32)),
-                    title: Text(loc.translate('export_backup')),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: _exportBackup,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // Import Backup
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.file_upload, color: Color(0xFF2E7D32)),
-                    title: Text(loc.translate('import_backup')),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: _importBackup,
-                  ),
-                ),
+                BannerAdWidget(),
               ],
             ),
     );

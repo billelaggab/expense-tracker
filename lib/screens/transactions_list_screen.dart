@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
 import '../services/localization_service.dart';
+import '../services/ad_service.dart';
+import '../widgets/banner_ad.dart';
 
 class TransactionsListScreen extends StatefulWidget {
   final LocalizationService localization;
@@ -103,6 +105,9 @@ class _TransactionsListScreenState extends State<TransactionsListScreen> {
                         onDismissed: (_) async {
                           await DatabaseService.instance.deleteTransaction(t.id!);
                           _loadData();
+                          // Increment transaction counter for ad frequency
+                          if (!mounted) return;
+                          AdService.instance.incrementTransactionCounter();
                         },
                         background: Container(
                           alignment: AlignmentDirectional.centerEnd,
@@ -143,6 +148,7 @@ class _TransactionsListScreenState extends State<TransactionsListScreen> {
                     },
                   ),
           ),
+          BannerAdWidget(),
         ],
       ),
     );

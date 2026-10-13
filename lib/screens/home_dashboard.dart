@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
 import '../services/localization_service.dart';
+import '../services/ad_service.dart';
+import '../widgets/banner_ad.dart';
 import 'add_transaction_screen.dart';
 import 'transactions_list_screen.dart';
 import 'stats_screen.dart';
@@ -154,7 +156,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
               _buildBudgetCard(loc),
               _buildCategorySection(loc),
               _buildRecentSection(loc),
-              const SizedBox(height: 80),
+              const SizedBox(height: 20),
+              BannerAdWidget(),
             ],
           ),
         ),
