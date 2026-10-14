@@ -1,13 +1,12 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class AdService {
   AdService._internal();
   static final AdService instance = AdService._internal();
 
   // Test ad unit IDs (replace with real IDs in production)
-  static String get _bannerAdUnitId {
+  static String get bannerAdUnitId {
     if (kDebugMode) {
       return 'ca-app-pub-3940256099942544/6300978111'; // Banner test ID
     }
@@ -15,7 +14,7 @@ class AdService {
     return 'ca-app-pub-XXXXXXXXXXXXXXXX/BANNER_ID';
   }
 
-  static String get _interstitialAdUnitId {
+  static String get interstitialAdUnitId {
     if (kDebugMode) {
       return 'ca-app-pub-3940256099942544/1033173712'; // Interstitial test ID
     }
@@ -23,67 +22,35 @@ class AdService {
     return 'ca-app-pub-XXXXXXXXXXXXXXXX/INTERSTITIAL_ID';
   }
 
-
-  BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
   bool _isInterstitialLoaded = false;
   int _transactionsSinceLastInterstitial = 0;
   static const int _interstitialFrequency = 4; // Show every 4 transactions
+  bool _isDisposed = false;
 
-  BannerAd? get bannerAd => _bannerAd;
+  void initialize() async {
+    await MobileAds.instance.initialize();
 
-  void initialize() {
-    MobileAds.instance.initialize();
-  }
-
-  BannerAd createBannerAd() {
-    return BannerAd(
-      adUnitId: _bannerAdUnitId,
-      size: AdSize.banner,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (Ad ad) => debugPrint('BannerAd loaded'),
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          debugPrint('BannerAd failedToLoad: $error');
-          ad.dispose();
-        },
-        onAdOpened: (Ad ad) => debugPrint('BannerAd opened'),
-        onAdClosed: (Ad ad) => debugPrint('BannerAd closed'),
-      ),
+    // Set test device ID to ensure ads load in development
+    MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(testDeviceIds: ['96A39D6D32901C7064299B0E208A0AC0']),
     );
-  }
 
-  void loadBannerAd() {
-    _bannerAd?.dispose();
-    _bannerAd = createBannerAd()..load();
-  }
-
-  void disposeBannerAd() {
-    _bannerAd?.dispose();
-    _bannerAd = null;
-  }
-
-  Widget buildBannerAd() {
-    if (_bannerAd == null) {
-      loadBannerAd();
-      return SizedBox(
-        width: double.infinity,
-        height: 50,
-      );
-    }
-    return SizedBox(
-      width: AdSize.banner.width.toDouble(),
-      height: AdSize.banner.height.toDouble(),
-      child: AdWidget(ad: _bannerAd!),
-    );
+    loadInterstitialAd(); // Pre-load interstitial on initialization
   }
 
   void loadInterstitialAd() {
+    if (_isDisposed) return;
     InterstitialAd.load(
-      adUnitId: _interstitialAdUnitId,
+      adUnitId: interstitialAdUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
+          if (_isDisposed) {
+            ad.dispose();
+            return;
+          }
+          _interstitialAd?.dispose(); // Dispose any existing ad
           _interstitialAd = ad;
           _isInterstitialLoaded = true;
           debugPrint('InterstitialAd loaded');
@@ -97,6 +64,7 @@ class AdService {
   }
 
   void showInterstitialAd() {
+    if (_isDisposed) return;
     if (_isInterstitialLoaded && _interstitialAd != null) {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (InterstitialAd ad) =>
@@ -105,12 +73,17 @@ class AdService {
           debugPrint('InterstitialAd onAdDismissedFullScreenContent');
           ad.dispose();
           _isInterstitialLoaded = false;
-          loadInterstitialAd(); // Pre-load next interstitial
+          if (!_isDisposed) {
+            loadInterstitialAd(); // Pre-load next interstitial
+          }
         },
         onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
           debugPrint('InterstitialAd onAdFailedToShowFullScreenContent: $error');
           ad.dispose();
           _isInterstitialLoaded = false;
+          if (!_isDisposed) {
+            loadInterstitialAd(); // Try to load if failed
+          }
         },
       );
       _interstitialAd!.show();
@@ -122,6 +95,7 @@ class AdService {
   }
 
   void incrementTransactionCounter() {
+    if (_isDisposed) return;
     _transactionsSinceLastInterstitial++;
     if (_transactionsSinceLastInterstitial >= _interstitialFrequency) {
       _transactionsSinceLastInterstitial = 0;
@@ -134,7 +108,9 @@ class AdService {
   }
 
   void dispose() {
-    _bannerAd?.dispose();
+    _isDisposed = true;
     _interstitialAd?.dispose();
+    _interstitialAd = null;
+    _isInterstitialLoaded = false;
   }
 }

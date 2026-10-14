@@ -38,6 +38,15 @@ class DatabaseService {
     ''');
   }
 
+  /// Properly close the database connection to free resources
+  Future<void> close() async {
+    final db = _database;
+    if (db != null) {
+      await db.close();
+      _database = null;
+    }
+  }
+
   Future<int> insertTransaction(ExpenseTransaction transaction) async {
     final db = await instance.database;
     return await db.insert('transactions', transaction.toMap());
@@ -84,10 +93,5 @@ class DatabaseService {
       where: 'id = ?',
       whereArgs: [id],
     );
-  }
-
-  Future close() async {
-    final db = await instance.database;
-    db.close();
   }
 }

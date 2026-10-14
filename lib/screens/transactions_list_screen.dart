@@ -18,11 +18,26 @@ class _TransactionsListScreenState extends State<TransactionsListScreen> {
   List<ExpenseTransaction> _transactions = [];
   String _searchQuery = '';
   TransactionCategory? _categoryFilter;
+  late LocalizationService _localization;
 
   @override
   void initState() {
     super.initState();
+    _localization = widget.localization;
+    _localization.addListener(_onLocaleChanged);
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    _localization.removeListener(_onLocaleChanged);
+    super.dispose();
+  }
+
+  void _onLocaleChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _loadData() async {

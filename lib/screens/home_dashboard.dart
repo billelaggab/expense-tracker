@@ -24,12 +24,27 @@ class _HomeDashboardState extends State<HomeDashboard> {
   DateTime _budgetStartDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
   List<ExpenseTransaction> _recentTransactions = [];
   Map<TransactionCategory, double> _categoryTotals = {};
+  late LocalizationService _localization;
 
   @override
   void initState() {
     super.initState();
+    _localization = widget.localization;
+    _localization.addListener(_onLocaleChanged);
     _loadData();
     _loadBudgetAndSettings();
+  }
+
+  @override
+  void dispose() {
+    _localization.removeListener(_onLocaleChanged);
+    super.dispose();
+  }
+
+  void _onLocaleChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _loadBudgetAndSettings() async {

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import '../services/database_service.dart';
 import '../services/localization_service.dart';
+import '../services/ad_service.dart';
 
 class AddTransactionScreen extends StatefulWidget {
   final LocalizationService localization;
@@ -20,6 +21,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   TransactionCategory _selectedCategory = TransactionCategory.food;
   DateTime _selectedDate = DateTime.now();
 
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -32,6 +41,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     );
 
     await DatabaseService.instance.insertTransaction(newTransaction);
+    // Increment transaction counter for interstitial ads
+    AdService.instance.incrementTransactionCounter();
     if (mounted) Navigator.pop(context);
   }
 

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'services/localization_service.dart';
+import 'services/ad_service.dart';
+import 'services/database_service.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_dashboard.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  await MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 
@@ -18,15 +20,39 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final LocalizationService _localization = LocalizationService();
 
   @override
   void initState() {
     super.initState();
-    _localization.addListener(() {
+    WidgetsBinding.instance.addObserver(this);
+    _localization.addListener(_onLocaleChanged);
+    AdService.instance.initialize();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _localization.removeListener(_onLocaleChanged);
+    AdService.instance.dispose();
+    DatabaseService.instance.close();
+    super.dispose();
+  }
+
+  void _onLocaleChanged() {
+    if (mounted) {
       setState(() {});
-    });
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.detached) {
+      AdService.instance.dispose();
+      DatabaseService.instance.close();
+    }
   }
 
   @override

@@ -16,11 +16,26 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   DateTime _budgetStartDate = DateTime.now();
   bool _isLoading = true;
+  late LocalizationService _localization;
 
   @override
   void initState() {
     super.initState();
+    _localization = widget.localization;
+    _localization.addListener(_onLocaleChanged);
     _loadBudgetStartDate();
+  }
+
+  @override
+  void dispose() {
+    _localization.removeListener(_onLocaleChanged);
+    super.dispose();
+  }
+
+  void _onLocaleChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _loadBudgetStartDate() async {
