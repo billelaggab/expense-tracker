@@ -7,9 +7,8 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 import com.google.android.gms.ads.MobileAds
 
 class MainActivity : FlutterActivity() {
-  @Override
-  void configureFlutterEngine(FlutterEngine flutterEngine) {
-    GeneratedPluginRegistrant.registerWith(flutterEngine);
-    MobileAds.initialize(this);
-  }
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine)
+        MobileAds.initialize(this)
+    }
 }
