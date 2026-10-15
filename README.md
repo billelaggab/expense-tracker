@@ -67,23 +67,23 @@ Built from the ground up to support both **Arabic** (RTL) and **English** (LTR) 
   <table>
     <tr>
       <td align="center" width="20%">
-        <b>Dashboard</b><br/><br/>
+        <b>Arabic Homepage</b><br/><br/>
         <img src="UI/Screenshots/photo_2026-10-09_13-14-54.jpg" alt="Home Dashboard" width="100%" />
       </td>
       <td align="center" width="20%">
-        <b>Add Expense</b><br/><br/>
+        <b>Analytics & Stats</b><br/><br/>
         <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (2).jpg" alt="Add Transaction" width="100%" />
       </td>
       <td align="center" width="20%">
-        <b>Transactions History</b><br/><br/>
+        <b>Settings & Backup</b><br/><br/>
         <img src="UI/Screenshots/photo_2026-10-09_13-14-54 (3).jpg" alt="Transaction History" width="100%" />
       </td>
       <td align="center" width="20%">
-        <b>Analytics & Stats</b><br/><br/>
+        <b>English Homepage</b><br/><br/>
         <img src="UI/Screenshots/photo_2026-10-09_13-14-55.jpg" alt="Statistics and Charts" width="100%" />
       </td>
       <td align="center" width="20%">
-        <b>Settings & Backup</b><br/><br/>
+        <b>Transactions History</b><br/><br/>
         <img src="UI/Screenshots/photo_2026-10-09_13-14-55 (2).jpg" alt="Settings & Backup" width="100%" />
       </td>
     </tr>
