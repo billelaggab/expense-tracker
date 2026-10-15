@@ -17,7 +17,8 @@
   <a href="#-project-structure">Project Structure</a> •
   <a href="#-technical-architecture--ai-context">Architecture (AI Context)</a> •
   <a href="#-getting-started">Getting Started</a> •
-  <a href="#-contributing">Contributing</a>
+  <a href="#-contributing">Contributing</a> •
+  <a href="#-support--coffee">Support</a>
 </p>
 
 </div>
@@ -196,6 +197,18 @@ flutter doctor
    # Android App Bundle (AAB)
    flutter build appbundle --release
    ```
+
+---
+
+## 💖 Support & Coffee
+
+If you find this project useful or would like to support its continuous development and maintenance, consider buying me a coffee! Your contribution helps keep this project open-source and privacy-focused.
+
+<div align="center">
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1A528VA4K)
+
+</div>
 
 ---
 
