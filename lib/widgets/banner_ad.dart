@@ -51,7 +51,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   Widget build(BuildContext context) {
     if (!_isLoaded || _bannerAd == null) {
       return const SizedBox(
-        height: 50,
+        height: 60,
         width: double.infinity,
       );
     }

@@ -15,6 +15,7 @@
   <a href="#-screenshots">Screenshots</a> •
   <a href="#-tech-stack">Tech Stack</a> •
   <a href="#-project-structure">Project Structure</a> •
+  <a href="#-technical-architecture--ai-context">Architecture (AI Context)</a> •
   <a href="#-getting-started">Getting Started</a> •
   <a href="#-contributing">Contributing</a>
 </p>
@@ -33,25 +34,28 @@ Built from the ground up to support both **Arabic** (RTL) and **English** (LTR) 
 
 ## ✨ Key Features
 
-- 🔒 **100% Local-First & Zero Telemetry**  
+- 🔒 **100% Local-First & Zero Telemetry**
   Zero remote servers or third-party trackers. All records are stored locally using SQLite (`sqflite`), guaranteeing total privacy and offline availability.
 
-- 🌍 **Bilingual & RTL-Native (Arabic & English)**  
+- 🌍 **Bilingual & RTL-Native (Arabic & English)**
   Instant runtime switching between Arabic and English with full Right-to-Left (RTL) and Left-to-Right (LTR) layout adaptability.
 
-- 📊 **Interactive Analytics & Categorization**  
+- 📊 **Interactive Analytics & Categorization**
   Rich graphical breakdowns powered by `fl_chart`. Inspect monthly spending by category, track trends, and identify cash flow patterns at a glance.
 
-- 🎯 **Dynamic Budget Management**  
+- 🎯 **Dynamic Budget Management**
   Define custom monthly spending caps. Visual progress indicators provide immediate feedback on remaining funds and consumption velocity.
 
-- ⏱️ **Intelligent Budget Cycle Tracking**  
+- ⏱️ **Intelligent Budget Cycle Tracking**
   Track your custom billing cycle with a synchronized progress timeline showing days elapsed versus remaining in your budget period.
 
-- 💾 **Portable JSON Backup & Restore**  
+- 💾 **Portable JSON Backup & Restore**
   Export full backups in human-readable JSON format, share via system sheets (`share_plus`), and restore anytime without friction.
 
-- 🎨 **Modern Material 3 Aesthetic**  
+- 📢 **Integrated Non-Intrusive Ads (Google AdMob)**
+  Clean banner and interstitial monetization via `google_mobile_ads` with lifecycle-aware widget sandboxing to prevent memory leaks and UI conflicts.
+
+- 🎨 **Modern Material 3 Aesthetic**
   Clean, accessible UI built around Material Design 3 guidelines, paired with bundled local `Rubik` typography for consistent rendering across platforms.
 
 ---
@@ -92,7 +96,9 @@ Built from the ground up to support both **Arabic** (RTL) and **English** (LTR) 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
 | **Framework** | [Flutter](https://flutter.dev/) (Dart SDK `^3.0.0`) | Cross-platform UI toolkit |
-| **Local Database** | [`sqflite`](https://pub.dev/packages/sqflite) & [`path`](https://pub.dev/packages/path) | High-performance relational persistence |
+| **Application ID** | `com.aggab.exptracker` | Canonical package namespace |
+| **Local Database** | [`sqflite`](https://pub.dev/packages/sqflite) & [`path`](https://pub.dev/packages/path) | High-performance relational persistence with explicit connection lifecycle |
+| **Monetization** | [`google_mobile_ads`](https://pub.dev/packages/google_mobile_ads) | Google AdMob integration (Adaptive Banners & Interstitials) |
 | **Preferences** | [`shared_preferences`](https://pub.dev/packages/shared_preferences) | Key-value store for app configuration and active budget parameters |
 | **Data Visualization** | [`fl_chart`](https://pub.dev/packages/fl_chart) | Interactive charts and category breakdown graphs |
 | **Internationalization** | [`intl`](https://pub.dev/packages/intl) & Custom Localization | Multilingual locale handling and number/currency formatting |
@@ -113,20 +119,37 @@ expense_tracker/
 │   ├── screens/               # Presentation layer and application screens
 │   │   ├── home_dashboard.dart           # Primary dashboard & budget overview
 │   │   ├── add_transaction_screen.dart   # Transaction creation and editing
-│   │   ├── transactions_list_screen.dart # Chronological transaction log
+│   │   ├── transactions_list_screen.dart # Chronological transaction log & search
 │   │   ├── stats_screen.dart             # Charts, analytics, and category breakdown
 │   │   └── settings_screen.dart          # Currency, language, and backup controls
 │   ├── services/              # Core business logic & persistence
-│   │   ├── database_service.dart         # SQLite queries and migrations
+│   │   ├── database_service.dart         # SQLite queries, migrations, and cleanup
 │   │   ├── localization_service.dart     # AR/EN translations and locale state
+│   │   ├── ad_service.dart               # AdMob initialization & interstitial management
 │   │   └── backup_service.dart           # JSON export, import, and validation
+│   ├── widgets/               # Reusable UI widgets
+│   │   └── banner_ad.dart                # Standalone, lifecycle-safe BannerAd widget
 │   ├── theme/                 # Design tokens, color schemes, and component themes
 │   │   └── app_theme.dart
-│   └── main.dart              # Application bootstrap & dependency setup
+│   └── main.dart              # Application bootstrap, ad init & observer setup
 ├── UI/
 │   └── Screenshots/           # Visual documentation assets
 └── pubspec.yaml               # Project dependencies and asset manifests
 ```
+
+---
+
+## 🧠 Technical Architecture & AI Context
+
+For a detailed technical specification designed for developers, code reviewers, and AI models/agentic workflows, see the dedicated architecture document:
+
+👉 **[Read the Full Technical Architecture & AI Context (ARCHITECTURE.md)](ARCHITECTURE.md)**
+
+It covers:
+- Complete database schema & raw SQLite query designs
+- Lifecycle and memory leak mitigation strategies
+- AdMob component sandboxing & Android platform integration
+- Rules and constraints for automated code modifications
 
 ---
 
